@@ -2,6 +2,7 @@
 import React from 'react';
 import Header from './Header';
 import KpiCard from './KpiCard';
+import QuickActions from './QuickActions';
 import { Truck, Users, Navigation, Siren } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
@@ -33,12 +34,12 @@ const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <div className="flex-1 bg-slate-900">
+    <div className="flex-1 bg-gray-50 dark:bg-slate-900">
       <Header title="Dashboard" />
       
       <div className="p-6">
-        {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* KPI Cards - Row 1 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
           <KpiCard
             title="Ukupno Aktivnih Vozila"
             value={42}
@@ -69,23 +70,24 @@ const DashboardPage: React.FC = () => {
           />
         </div>
 
-        {/* Charts and Tables Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Charts and Quick Actions - Row 2 */}
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 mb-8">
           {/* Cost Chart */}
-          <div className="lg:col-span-2 xl:col-span-2 bg-slate-800 border border-slate-700 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Troškovi u Poslednjih 7 Meseci</h3>
+          <div className="xl:col-span-3 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Troškovi u Poslednjih 7 Meseci</h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={costData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-                <XAxis dataKey="name" stroke="#94a3b8" />
-                <YAxis stroke="#94a3b8" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" className="dark:stroke-slate-600" />
+                <XAxis dataKey="name" stroke="#64748b" className="dark:stroke-slate-400" />
+                <YAxis stroke="#64748b" className="dark:stroke-slate-400" />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: '#1e293b', 
-                    border: '1px solid #475569',
+                    backgroundColor: 'rgb(var(--color-slate-800))', 
+                    border: '1px solid rgb(var(--color-slate-700))',
                     borderRadius: '8px',
                     color: '#ffffff'
                   }} 
+                  labelStyle={{ color: '#ffffff' }}
                 />
                 <Line 
                   type="monotone" 
@@ -98,21 +100,30 @@ const DashboardPage: React.FC = () => {
             </ResponsiveContainer>
           </div>
 
+          {/* Quick Actions */}
+          <div className="xl:col-span-1">
+            <QuickActions />
+          </div>
+        </div>
+
+        {/* Charts and Tables - Row 3 */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           {/* Vehicle Status Chart */}
-          <div className="lg:col-span-1 xl:col-span-1 bg-slate-800 border border-slate-700 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Status Vozila</h3>
+          <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Status Vozila</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={vehicleStatusData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-                <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} />
-                <YAxis stroke="#94a3b8" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" className="dark:stroke-slate-600" />
+                <XAxis dataKey="name" stroke="#64748b" className="dark:stroke-slate-400" fontSize={12} />
+                <YAxis stroke="#64748b" className="dark:stroke-slate-400" />
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: '#1e293b', 
-                    border: '1px solid #475569',
+                    backgroundColor: 'rgb(var(--color-slate-800))', 
+                    border: '1px solid rgb(var(--color-slate-700))',
                     borderRadius: '8px',
                     color: '#ffffff'
                   }} 
+                  labelStyle={{ color: '#ffffff' }}
                 />
                 <Bar dataKey="vrednost" fill="#3b82f6" radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -120,23 +131,23 @@ const DashboardPage: React.FC = () => {
           </div>
 
           {/* Reminders Table */}
-          <div className="lg:col-span-3 xl:col-span-1 bg-slate-800 border border-slate-700 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Najnoviji Nerešeni Podsetnici</h3>
+          <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Najnoviji Nerešeni Podsetnici</h3>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-slate-700">
-                    <th className="text-left text-sm font-medium text-slate-400 pb-3">Vozilo</th>
-                    <th className="text-left text-sm font-medium text-slate-400 pb-3">Tip</th>
-                    <th className="text-left text-sm font-medium text-slate-400 pb-3">Datum</th>
+                  <tr className="border-b border-gray-200 dark:border-slate-700">
+                    <th className="text-left text-sm font-medium text-gray-500 dark:text-slate-400 pb-3">Vozilo</th>
+                    <th className="text-left text-sm font-medium text-gray-500 dark:text-slate-400 pb-3">Tip</th>
+                    <th className="text-left text-sm font-medium text-gray-500 dark:text-slate-400 pb-3">Datum</th>
                   </tr>
                 </thead>
                 <tbody>
                   {reminders.map((reminder, index) => (
-                    <tr key={reminder.id} className={index !== reminders.length - 1 ? 'border-b border-slate-700' : ''}>
-                      <td className="py-3 text-sm text-white font-medium">{reminder.vozilo}</td>
-                      <td className="py-3 text-sm text-slate-300">{reminder.tip}</td>
-                      <td className="py-3 text-sm text-slate-400">{reminder.datum}</td>
+                    <tr key={reminder.id} className={index !== reminders.length - 1 ? 'border-b border-gray-200 dark:border-slate-700' : ''}>
+                      <td className="py-3 text-sm text-gray-900 dark:text-white font-medium">{reminder.vozilo}</td>
+                      <td className="py-3 text-sm text-gray-600 dark:text-slate-300">{reminder.tip}</td>
+                      <td className="py-3 text-sm text-gray-500 dark:text-slate-400">{reminder.datum}</td>
                     </tr>
                   ))}
                 </tbody>
