@@ -1,15 +1,18 @@
 
 import React from 'react';
 import { LayoutDashboard, Truck, Users, Map, CreditCard, Settings } from 'lucide-react';
+import { useLocation, Link } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
+  const location = useLocation();
+  
   const navigationItems = [
-    { name: 'Dashboard', icon: LayoutDashboard, active: true },
-    { name: 'Vozila', icon: Truck, active: false },
-    { name: 'Vozači', icon: Users, active: false },
-    { name: 'Putni Nalozi', icon: Map, active: false },
-    { name: 'Troškovi', icon: CreditCard, active: false },
-    { name: 'Podešavanja', icon: Settings, active: false },
+    { name: 'Dashboard', icon: LayoutDashboard, path: '/' },
+    { name: 'Vozila', icon: Truck, path: '/vehicles' },
+    { name: 'Vozači', icon: Users, path: '/drivers' },
+    { name: 'Putni Nalozi', icon: Map, path: '/travel-orders' },
+    { name: 'Troškovi', icon: CreditCard, path: '/expenses' },
+    { name: 'Podešavanja', icon: Settings, path: '/settings' },
   ];
 
   return (
@@ -32,19 +35,20 @@ const Sidebar: React.FC = () => {
         <ul className="space-y-2">
           {navigationItems.map((item) => {
             const IconComponent = item.icon;
+            const isActive = location.pathname === item.path;
             return (
               <li key={item.name}>
-                <a
-                  href="#"
+                <Link
+                  to={item.path}
                   className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-colors duration-200 ${
-                    item.active
+                    isActive
                       ? 'bg-blue-600 text-white'
                       : 'text-gray-700 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-white'
                   }`}
                 >
                   <IconComponent className="w-5 h-5" />
                   <span className="font-medium">{item.name}</span>
-                </a>
+                </Link>
               </li>
             );
           })}
